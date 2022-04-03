@@ -52,7 +52,7 @@ public class LoginForm : MonoBehaviour
     }
     public void LoginClicked()
     {
-        string document = ReadWriteDatabase.FindDocumentByElement("User","username", usernameField.text);
+        string document = ReadWriteDatabase.FindDocumentByElement("User", "username", usernameField.text);
         Debug.Log(document);
         if(document != string.Empty)
         {

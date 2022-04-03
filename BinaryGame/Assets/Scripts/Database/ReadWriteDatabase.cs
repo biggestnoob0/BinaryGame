@@ -94,8 +94,12 @@ namespace Assets.Scripts.Database
             if (collection != null)
             {
                 var filter = Builders<BsonDocument>.Filter.Eq(label, value);
-                var document = collection.Find<BsonDocument>(filter).ToList().ToJson();
-                return document;
+                string document = collection.Find<BsonDocument>(filter).ToList().ToJson();
+                if (document != null)
+                {
+                    return document;
+                }
+                return "";
             }
             return "";
         }
