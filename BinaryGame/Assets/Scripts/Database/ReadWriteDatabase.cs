@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.Database
 {
@@ -12,6 +13,7 @@ namespace Assets.Scripts.Database
     {
         public static void AddToCollection(string collection, string[] data)
         {
+
             if (Connection.database != null)
             {
                 IMongoCollection<BsonDocument> collectionConnection;
@@ -52,6 +54,50 @@ namespace Assets.Scripts.Database
                 return documents;
             }
             return null;
+        }
+        public static void ChangeDocument(string collectionName, string idLabel, string idValue, string labelOfUpdate, string valueUpdate)
+        {
+            var collection = Connection.database.GetCollection<BsonDocument>(collectionName);
+            if (collection != null)
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq(idLabel, idValue);
+                var update = Builders<BsonDocument>.Update.Set(labelOfUpdate, valueUpdate);
+                try
+                {
+                    collection.UpdateOne(filter, update);
+                }
+                catch (Exception)
+                {
+                    Debug.Log("document change failed");
+                }
+            }
+        }
+        public static string FindIdByElementInCollection(string collectionName, string label, string value)
+        {
+            var collection = Connection.database.GetCollection<BsonDocument>(collectionName);
+            if(collection != null)
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq(label, value);
+                var document = collection.Find(filter);
+                if(document != null)
+                {
+                    string id = JSONValueFinder.findValue(document.ToJson(), "_id");
+                    return id;
+                }
+                return "";
+            }
+            return "";
+        }
+        public static string FindDocumentByElement(string collectionName, string label, string value)
+        {
+            var collection = Connection.database.GetCollection<BsonDocument>(collectionName);
+            if (collection != null)
+            {
+                var filter = Builders<BsonDocument>.Filter.Eq(label, value);
+                var document = collection.Find<BsonDocument>(filter).ToList().ToJson();
+                return document;
+            }
+            return "";
         }
     }
 }

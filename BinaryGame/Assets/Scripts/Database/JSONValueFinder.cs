@@ -10,17 +10,23 @@ namespace Assets.Scripts.Database
     {
         public static string findValue(string str, string label)
         {
-            string newStr = str.Remove(0, str.IndexOf(label));
-            newStr = JSONDeformatter.GetRidOfJsonCharacters(newStr);
-            int commaIndex = newStr.IndexOf(",");
-            if (commaIndex > -1)
+
+            int labelIndex = str.IndexOf(label + ":");
+            if (labelIndex > -1)
             {
-                return newStr.Substring(label.Length + 1, commaIndex - label.Length - 1);
+                string newStr = str.Remove(0, labelIndex);
+                newStr = JSONDeformatter.GetRidOfJsonCharacters(newStr);
+                int commaIndex = newStr.IndexOf(",");
+                if (commaIndex > -1)
+                {
+                    return newStr.Substring(label.Length + 1, commaIndex - label.Length - 1);
+                }
+                else
+                {
+                    return "";
+                }
             }
-            else
-            {
-                return "";
-            }
+            return "";
         }
         public static List<string> findValues(string str, string label)
         {

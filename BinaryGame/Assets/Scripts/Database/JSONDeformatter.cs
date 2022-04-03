@@ -16,13 +16,14 @@ namespace Assets.Scripts.Database
             str = str.Replace("\"", "");
             str = str.Replace("[", "");
             str = str.Replace("]", "");
+            str = str.Replace("(", "");
+            str = str.Replace(")", "");
             while (true)
             {
-                int startIndex = str.IndexOf("_id");
-                int endIndex = str.IndexOf("),");
-                if (startIndex > -1 && endIndex > 0)
+                int startIndex = str.IndexOf("objectid");
+                if (startIndex > -1)
                 {
-                    str = str.Remove(startIndex, endIndex - startIndex + 2);
+                    str = str.Remove(startIndex, 8);
                 }
                 else
                 {

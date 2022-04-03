@@ -20,9 +20,13 @@ public class LoginForm : MonoBehaviour
         List<string> userFile = FileIO.ReadTextFile(FileNames.loginDetails, FileNames.dir, Globals.KeyAccountDetails);
         if(userFile != null)
         {
-            
-            Globals.currentUsersUsername = StringEncryption.EncryptStringWithoutConversion(Globals.KeyAccountDetails, userFile[0].Substring(0, userFile[0].IndexOf(",")));
-            SceneManager.LoadScene("StartMenu");
+            string document = ReadWriteDatabase.FindDocumentByElement("User", "username", userFile[0]);
+            if (!document.Equals(""))
+            {
+                if(JSONValueFinder.findValue(document, "password").Equals(userFile[1]))
+                Globals.currentUsersUsername = StringEncryption.EncryptStringWithoutConversion(Globals.KeyAccountDetails, userFile[0].Substring(0, userFile[0].IndexOf(",")));
+                SceneManager.LoadScene("StartMenu");
+            }
         }
         usernameField = GameObject.Find("Username").GetComponent<InputField>();
         passwordField = GameObject.Find("Password").GetComponent<InputField>();
@@ -48,6 +52,19 @@ public class LoginForm : MonoBehaviour
     }
     public void LoginClicked()
     {
+        string document = ReadWriteDatabase.FindDocumentByElement("User","username", usernameField.text);
+        Debug.Log(document);
+        if(document != string.Empty)
+        {
+            string pw = StringEncryption.DecryptStringWithoutConversion(Globals.KeyAccountDetails, JSONValueFinder.findValue(document, "password"));
+            Debug.Log(pw);
+            if(pw.Equals(passwordField.text))
+            {
+                Globals.currentUsersUsername = usernameField.text;
+                FileIO.WriteLines(new string[] { usernameField.text, passwordField.text }, FileNames.loginDetails, FileNames.dir);
+                SceneManager.LoadScene("StartMenu");
+            }
+        }
 
     }
 

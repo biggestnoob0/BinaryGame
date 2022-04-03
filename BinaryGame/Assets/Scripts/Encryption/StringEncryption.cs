@@ -14,7 +14,7 @@ namespace Assets.Scripts.Encryption
             "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
 
             "!", "0", ".", "1", "#", "2", "{", "3", ")", "4", ";", "5", "/",
-            "'", "6", "~", "7", ":", "8", "%", "9", ">", "-", ",", "<", "?",
+            "'", "6", "~", "7", "8", "%", "9", ">", "-", "<", "?",
             "*", "@", "£", "$", "^", "}", "(", "_", "+", "=", "|", "`", "[",
             " ", "]",
 
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Encryption
             "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
 
            "!", "0", ".", "1", "#", "2", "{", "3", ")", "4", ";", "5", "/",
-            "'", "6", "~", "7", ":", "8", "%", "9", ">", "-", ",", "<", "?",
+            "'", "6", "~", "7", "8", "%", "9", ">", "-", "<", "?",
             "*", "@", "£", "$", "^", "}", "(", "_", "+", "=", "|", "`", "[",
             " ", "]",
 
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Encryption
             "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
 
            "!", "0", ".", "1", "#", "2", "{", "3", ")", "4", ";", "5", "/",
-            "'", "6", "~", "7", ":", "8", "%", "9", ">", "-", ",", "<", "?",
+            "'", "6", "~", "7", "8", "%", "9", ">", "-", "<", "?",
             "*", "@", "£", "$", "^", "}", "(", "_", "+", "=", "|", "`", "[",
             " ", "]",
 
@@ -265,7 +265,7 @@ namespace Assets.Scripts.Encryption
             }
             for (int i = 0; i < stringToDecrypt.Length; i++)
             {
-                int index = Array.IndexOf(LetterPlacements, stringToDecrypt[i].ToString()) + 186 - encryptionShift[i] - 1;
+                int index = Array.IndexOf(LetterPlacements, stringToDecrypt[i].ToString()) + 182 - encryptionShift[i] - 1;
                 if (index != -1)
                 {
                     newString += LetterPlacements[index];
