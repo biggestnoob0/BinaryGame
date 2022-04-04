@@ -74,7 +74,8 @@ public class SignUpForm : MonoBehaviour
                         StartCoroutine(ErrorMsg("Name already taken"));
                     }
                 }
-                if (available && FileIO.ReadTextFile(FileNames.loginTimesCheck, FileNames.dir, Globals.KeyAccountDetails).Count <= 5)
+                if (available && FileIO.ReadTextFile(FileNames.loginTimesCheck, FileNames.dir, Globals.KeyAccountDetails) == null ||
+                    available && FileIO.ReadTextFile(FileNames.loginTimesCheck, FileNames.dir, Globals.KeyAccountDetails).Count <= 5)
                 {
                     ReadWriteDatabase.AddToCollection("User", input);
                     FileIO.ReplaceFile(FileNames.loginDetails, FileNames.dir);

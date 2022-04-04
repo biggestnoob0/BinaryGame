@@ -16,7 +16,7 @@ namespace Assets.Scripts.Database
         {
             string username = "root";
             var test = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("");
-            string password = StringEncryption.DecryptStringAndReverseFromBytes("qlxbvnpsvcfhrjjabdmw", "072057068045049051033060");
+            string password = StringEncryption.DecryptStringAndReverseFromBytes("qlxbvnpsvcfhrjjabdmw", "071062068060049051033042");
             string databaseName = "binarygame.zxbgp.mongodb.net";
             MongoClient connection = new MongoClient("mongodb+srv://" + username + ":" + password + "@" + databaseName + "/test");
             database = connection.GetDatabase("BinaryGame");

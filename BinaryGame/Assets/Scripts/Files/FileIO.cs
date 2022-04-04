@@ -123,9 +123,16 @@ namespace Assets.Scripts.Files
                 List<string> lines = new List<string>();
                 using (StreamReader sr = new StreamReader(fileName))
                 {
-                    while (!sr.EndOfStream)
+                    if (encryptionKey.Equals(""))
                     {
-                        lines.Add(StringEncryption.DecryptStringWithoutConversion(encryptionKey, sr.ReadLine()));
+                        while (!sr.EndOfStream)
+                        {
+                            lines.Add(StringEncryption.DecryptStringWithoutConversion(encryptionKey, sr.ReadLine()));
+                        }
+                    }
+                    else
+                    {
+                        lines.Add(sr.ReadLine());
                     }
                 }
                 return lines;

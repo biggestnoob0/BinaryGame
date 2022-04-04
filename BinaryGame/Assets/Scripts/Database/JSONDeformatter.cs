@@ -10,29 +10,32 @@ namespace Assets.Scripts.Database
     {
         public static string GetRidOfJsonCharacters(string str)
         {
-            str = str.Replace("{", "");
-            str = str.Replace("}", "");
-            str = str.Replace(" ", "");
-            str = str.Replace("\"", "");
-            str = str.Replace("[", "");
-            str = str.Replace("]", "");
-            str = str.Replace("(", "");
-            str = str.Replace(")", "");
-            while (true)
+            if (str != String.Empty)
             {
-                int startIndex = str.IndexOf("objectid");
-                if (startIndex > -1)
+                str = str.Replace("{", "");
+                str = str.Replace("}", "");
+                str = str.Replace(" ", "");
+                str = str.Replace("\"", "");
+                str = str.Replace("[", "");
+                str = str.Replace("]", "");
+                str = str.Replace("(", "");
+                str = str.Replace(")", "");
+                while (true)
                 {
-                    str = str.Remove(startIndex, 8);
-                }
-                else
-                {
-                    break;
-                }
+                    int startIndex = str.IndexOf("objectid");
+                    if (startIndex > -1)
+                    {
+                        str = str.Remove(startIndex, 8);
+                    }
+                    else
+                    {
+                        break;
+                    }
 
+                }
+                return str;
             }
-            return str;
-
+            return "";
         }
     }
 }

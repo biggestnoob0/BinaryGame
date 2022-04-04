@@ -22,6 +22,7 @@ public class AccountSettingsOverlay : MonoBehaviour
         accountNameText = GameObject.Find("Name").GetComponent<Text>();
         accountNameText.text = Globals.currentUsersUsername;
         defaultElementsScreen.SetActive(true);
+        passwordChangerScreen.SetActive(false);
     }
 
     // Update is called once per frame

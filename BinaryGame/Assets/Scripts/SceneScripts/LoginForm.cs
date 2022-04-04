@@ -23,9 +23,11 @@ public class LoginForm : MonoBehaviour
             string document = ReadWriteDatabase.FindDocumentByElement("User", "username", userFile[0]);
             if (!document.Equals(""))
             {
-                if(JSONValueFinder.findValue(document, "password").Equals(userFile[1]))
-                Globals.currentUsersUsername = StringEncryption.EncryptStringWithoutConversion(Globals.KeyAccountDetails, userFile[0].Substring(0, userFile[0].IndexOf(",")));
-                SceneManager.LoadScene("StartMenu");
+                if (JSONValueFinder.findValue(document, "password").Equals(userFile[1]))
+                {
+                    Globals.currentUsersUsername = StringEncryption.EncryptStringWithoutConversion(Globals.KeyAccountDetails, userFile[0].Substring(0, userFile[0].IndexOf(",")));
+                    SceneManager.LoadScene("StartMenu");
+                }
             }
         }
         usernameField = GameObject.Find("Username").GetComponent<InputField>();
@@ -52,17 +54,21 @@ public class LoginForm : MonoBehaviour
     }
     public void LoginClicked()
     {
-        string document = ReadWriteDatabase.FindDocumentByElement("User", "username", usernameField.text);
-        Debug.Log(document);
-        if(document != string.Empty)
+        if (!usernameField.text.Equals(string.Empty) && !passwordField.text.Equals(string.Empty))
         {
-            string pw = StringEncryption.DecryptStringWithoutConversion(Globals.KeyAccountDetails, JSONValueFinder.findValue(document, "password"));
-            Debug.Log(pw);
-            if(pw.Equals(passwordField.text))
+
+            string document = ReadWriteDatabase.FindDocumentByElement("User", "username", usernameField.text);
+            if (document != string.Empty)
             {
-                Globals.currentUsersUsername = usernameField.text;
-                FileIO.WriteLines(new string[] { usernameField.text, passwordField.text }, FileNames.loginDetails, FileNames.dir);
-                SceneManager.LoadScene("StartMenu");
+                string pw = StringEncryption.DecryptStringWithoutConversion(Globals.KeyAccountDetails, JSONValueFinder.findValue(document, "password"));
+                Debug.Log(pw);
+                if (pw.Equals(passwordField.text))
+                {
+                    Debug.Log("made it");
+                    Globals.currentUsersUsername = usernameField.text;
+                    FileIO.WriteLines(new string[] { usernameField.text, passwordField.text }, FileNames.loginDetails, FileNames.dir);
+                    SceneManager.LoadScene("StartMenu");
+                }
             }
         }
 

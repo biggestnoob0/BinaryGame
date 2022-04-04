@@ -93,8 +93,8 @@ namespace Assets.Scripts.Database
             var collection = Connection.database.GetCollection<BsonDocument>(collectionName);
             if (collection != null)
             {
-                var filter = Builders<BsonDocument>.Filter.Eq(label, value);
-                string document = collection.Find<BsonDocument>(filter).ToList().ToJson();
+                FilterDefinition<BsonDocument> filter = Builders<BsonDocument>.Filter.Eq(label, value);
+                string document = collection.Find<BsonDocument>(filter).Limit(1).ToList().ToJson();
                 if (document != null)
                 {
                     return document;
