@@ -14,4 +14,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenu.unity
     guid: 480c54b125dcf844a95398414f2a0e3f
+  - enabled: 1
+    path: Assets/Scenes/DifficultySelector.unity
+    guid: ed676427f8622f64e965078b8954c3b2
+  - enabled: 1
+    path: Assets/Scenes/PracticeGame.unity
+    guid: 1281f98ac19df9e46b43f95c98eb072e
+  - enabled: 1
+    path: Assets/Scenes/PracticeOverScreen.unity
+    guid: a26520656bb2ba94b9798303b28b5a2f
+  - enabled: 1
+    path: Assets/Scenes/HighScoresCategory.unity
+    guid: 5eeee36cf0d184a48adb51d2943c34f7
+  - enabled: 1
+    path: Assets/Scenes/PracticeHighScores.unity
+    guid: 9c9019ec865e63445805c7b8ced53e20
   m_configObjects: {}

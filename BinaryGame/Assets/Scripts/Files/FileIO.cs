@@ -123,7 +123,7 @@ namespace Assets.Scripts.Files
                 List<string> lines = new List<string>();
                 using (StreamReader sr = new StreamReader(fileName))
                 {
-                    if (encryptionKey.Equals(""))
+                    if (!encryptionKey.Equals(""))
                     {
                         while (!sr.EndOfStream)
                         {

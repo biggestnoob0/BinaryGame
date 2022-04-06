@@ -11,5 +11,6 @@ namespace Assets.Scripts
         public static string KeyPersonalHighScores { get; } = "zmvbfkslpafjthebjcbqpcntbswgdfojhns";
         public static string KeyAccountDetails { get; } = "1937vnegamc84pv";
         public static string currentUsersUsername = "";
+        public static bool loginFormOpenedBefore = false;
     }
 }

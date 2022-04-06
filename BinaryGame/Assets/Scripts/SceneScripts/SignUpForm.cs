@@ -64,7 +64,7 @@ public class SignUpForm : MonoBehaviour
                 string[] input = { "{ 'username' : '" + usernameField.text + "'}",
                     "{ 'password' : '" + StringEncryption.EncryptStringWithoutConversion(Globals.KeyAccountDetails, passwordField.text) + "'}" };
                 bool available = true;
-                var collection = ReadWriteDatabase.ReadCollection("User");
+                var collection = ReadWriteDatabase.ReadCollection(DBCollections.userCollection);
                 List<string> listOfNames = JSONValueFinder.findValues(collection, "username");
                 for (int i = 0; i < listOfNames.Count; i++)
                 {
@@ -77,7 +77,7 @@ public class SignUpForm : MonoBehaviour
                 if (available && FileIO.ReadTextFile(FileNames.loginTimesCheck, FileNames.dir, Globals.KeyAccountDetails) == null ||
                     available && FileIO.ReadTextFile(FileNames.loginTimesCheck, FileNames.dir, Globals.KeyAccountDetails).Count <= 5)
                 {
-                    ReadWriteDatabase.AddToCollection("User", input);
+                    ReadWriteDatabase.AddToCollection(DBCollections.userCollection, input);
                     FileIO.ReplaceFile(FileNames.loginDetails, FileNames.dir);
                     FileIO.WriteLine(usernameField.text + "," + passwordField.text,
                         FileNames.loginDetails, FileNames.dir, Globals.KeyAccountDetails);

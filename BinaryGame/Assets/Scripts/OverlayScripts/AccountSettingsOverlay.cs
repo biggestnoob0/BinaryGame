@@ -2,10 +2,13 @@ using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class AccountSettingsOverlay : MonoBehaviour
 {
+    GameObject exitBtn;
+
     Text accountNameText;
     GameObject passwordChangerScreen;
     GameObject defaultElementsScreen;
@@ -17,6 +20,7 @@ public class AccountSettingsOverlay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        exitBtn = GameObject.Find("ExitButton");
         passwordChangerScreen = GameObject.Find("PasswordChangerScreen");
         defaultElementsScreen = GameObject.Find("DefaultElementsScreen");
         accountNameText = GameObject.Find("Name").GetComponent<Text>();
@@ -24,7 +28,9 @@ public class AccountSettingsOverlay : MonoBehaviour
         defaultElementsScreen.SetActive(true);
         passwordChangerScreen.SetActive(false);
     }
-
+    public void OnEnable()
+    {
+    }
     // Update is called once per frame
     void Update()
     {
@@ -37,6 +43,14 @@ public class AccountSettingsOverlay : MonoBehaviour
         passwordChangerScreen.SetActive(true);
         oldPassword = GameObject.Find("OldPassword").GetComponent<Text>();
         newPassword = GameObject.Find("NewPassword").GetComponent<Text>();
+    }
+    public void ExitClicked()
+    {
+        gameObject.SetActive(false);
+    }
+    public void SwitchAccountsClicked()
+    {
+        SceneManager.LoadScene(0);
     }
     #endregion
     #region password changer

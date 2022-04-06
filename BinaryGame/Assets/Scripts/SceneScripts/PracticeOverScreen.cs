@@ -17,8 +17,21 @@ public class PracticeOverScreen : MonoBehaviour
         scoreText = GameObject.Find("Score").GetComponent<Text>();
         scoreText.text = "Score: " + PracticeGameMechanics.score.ToString();
         // sets file name to applications data path plus \practice\highscores + the games difficulty + the extension
-        string input = "You" + "," + PracticeGameMechanics.score;
-        FileIO.WriteLine(Globals.KeyPersonalHighScores, input, FileNames.practiceFile, FileNames.practiceDir);
+        string input = "You" + ";" + PracticeGameMechanics.score;
+        switch (PracticeOverMechanics.difficulty.ToLower())
+        {
+            case "easy":
+                FileIO.WriteLine(input, FileNames.practiceEasyHighscores, FileNames.practiceDir, Globals.KeyPersonalHighScores);
+                break;
+            case "medium":
+                FileIO.WriteLine(input, FileNames.practiceMediumHighscores, FileNames.practiceDir, Globals.KeyPersonalHighScores);
+                break;
+            case "hard":
+                FileIO.WriteLine(input, FileNames.practiceHardHighscores, FileNames.practiceDir, Globals.KeyPersonalHighScores);
+                break;
+            default:
+                break;
+        }
     }
 
     // Update is called once per frame

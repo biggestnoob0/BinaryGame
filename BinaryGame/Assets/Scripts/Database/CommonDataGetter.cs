@@ -15,16 +15,16 @@ namespace Assets.Scripts.Database
         public static List<List<string>> GetUserDetails()
         {
             List<List<string>> details = new List<List<string>>();
-            details[0] = JSONValueFinder.findValues(ReadWriteDatabase.ReadCollection("User"), "username");
-            details[1] = JSONValueFinder.findValues(ReadWriteDatabase.ReadCollection("User"), "password");
+            details[0] = JSONValueFinder.findValues(ReadWriteDatabase.ReadCollection(DBCollections.userCollection), "username");
+            details[1] = JSONValueFinder.findValues(ReadWriteDatabase.ReadCollection(DBCollections.userCollection), "password");
 
             return details;
         }
         public static bool DoesUserDetailsContain(string usernameToCheck, string passwordToCheck)
         {
             List<List<string>> details = new List<List<string>>();
-            details[0] = JSONValueFinder.findValues(ReadWriteDatabase.ReadCollection("User"), "username");
-            details[1] = JSONValueFinder.findValues(ReadWriteDatabase.ReadCollection("User"), "password");
+            details[0] = JSONValueFinder.findValues(ReadWriteDatabase.ReadCollection(DBCollections.userCollection), "username");
+            details[1] = JSONValueFinder.findValues(ReadWriteDatabase.ReadCollection(DBCollections.userCollection), "password");
 
             if (usernameToCheck.Equals(string.Empty) || passwordToCheck.Equals(string.Empty))
             {

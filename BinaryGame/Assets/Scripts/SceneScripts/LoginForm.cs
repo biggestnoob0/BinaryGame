@@ -5,6 +5,8 @@ using Assets.Scripts.Files;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,24 +16,29 @@ public class LoginForm : MonoBehaviour
     InputField usernameField;
     InputField passwordField;
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
-        Connection.Connect();
-        List<string> userFile = FileIO.ReadTextFile(FileNames.loginDetails, FileNames.dir, Globals.KeyAccountDetails);
-        if(userFile != null)
+        usernameField = GameObject.Find("Username").GetComponent<InputField>();
+        passwordField = GameObject.Find("Password").GetComponent<InputField>();
+        if (!Globals.loginFormOpenedBefore)
         {
-            string document = ReadWriteDatabase.FindDocumentByElement("User", "username", userFile[0]);
-            if (!document.Equals(""))
+            Thread dbConnectionThread = new Thread(new ThreadStart(Connection.Connect));
+            dbConnectionThread.Start();
+            await new Task(() => { StartCoroutine(Connect()); });
+            List<string> userFile = FileIO.ReadTextFile(FileNames.loginDetails, FileNames.dir, Globals.KeyAccountDetails);
+            if (userFile != null)
             {
-                if (JSONValueFinder.findValue(document, "password").Equals(userFile[1]))
+                string document = ReadWriteDatabase.FindDocumentByElement(DBCollections.userCollection, "username", userFile[0]);
+                if (!document.Equals(""))
                 {
-                    Globals.currentUsersUsername = StringEncryption.EncryptStringWithoutConversion(Globals.KeyAccountDetails, userFile[0].Substring(0, userFile[0].IndexOf(",")));
-                    SceneManager.LoadScene("StartMenu");
+                    if (JSONValueFinder.findValue(document, "password").Equals(userFile[1]))
+                    {
+                        Globals.currentUsersUsername = StringEncryption.EncryptStringWithoutConversion(Globals.KeyAccountDetails, userFile[0].Substring(0, userFile[0].IndexOf(",")));
+                        SceneManager.LoadScene("StartMenu");
+                    }
                 }
             }
         }
-        usernameField = GameObject.Find("Username").GetComponent<InputField>();
-        passwordField = GameObject.Find("Password").GetComponent<InputField>();
     }
 
     // Update is called once per frame
@@ -57,14 +64,12 @@ public class LoginForm : MonoBehaviour
         if (!usernameField.text.Equals(string.Empty) && !passwordField.text.Equals(string.Empty))
         {
 
-            string document = ReadWriteDatabase.FindDocumentByElement("User", "username", usernameField.text);
+            string document = ReadWriteDatabase.FindDocumentByElement(DBCollections.userCollection, "username", usernameField.text);
             if (document != string.Empty)
             {
                 string pw = StringEncryption.DecryptStringWithoutConversion(Globals.KeyAccountDetails, JSONValueFinder.findValue(document, "password"));
-                Debug.Log(pw);
                 if (pw.Equals(passwordField.text))
                 {
-                    Debug.Log("made it");
                     Globals.currentUsersUsername = usernameField.text;
                     FileIO.WriteLines(new string[] { usernameField.text, passwordField.text }, FileNames.loginDetails, FileNames.dir);
                     SceneManager.LoadScene("StartMenu");
@@ -77,5 +82,9 @@ public class LoginForm : MonoBehaviour
     public void SignUpClicked()
     {
         SceneManager.LoadScene("SignUpForm");
+    }
+    public IEnumerator Connect()
+    {
+        yield return new Task(Connection.Connect);
     }
 }

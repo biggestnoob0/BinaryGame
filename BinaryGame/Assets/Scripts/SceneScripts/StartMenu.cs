@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour
 {
+    public GameObject accountSettings;
     // Start is called before the first frame update
     void Start()
     {
-
+        accountSettings.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,6 +32,6 @@ public class StartMenu : MonoBehaviour
     }
     public void OnAccountClick()
     {
-        GameObject.Find("AccountSettingsCanvas").SetActive(true);
+        accountSettings.SetActive(true);
     }
 }

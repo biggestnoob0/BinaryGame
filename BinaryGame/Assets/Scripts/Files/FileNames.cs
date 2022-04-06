@@ -10,7 +10,9 @@ namespace Assets.Scripts.Files
 {
     static class FileNames
     {
-        public static string practiceFile = Application.persistentDataPath + @"\practice\highscores" + PracticeOverMechanics.difficulty + ".txt";
+        public static string practiceEasyHighscores = Application.persistentDataPath + @"\practice\highscores\easy.txt";
+        public static string practiceMediumHighscores = Application.persistentDataPath + @"\practice\highscores\medium.txt";
+        public static string practiceHardHighscores = Application.persistentDataPath + @"\practice\highscores\hard.txt";
         public static string loginDetails = Application.persistentDataPath + @"\user" + ".txt";
         public static string loginTimesCheck = Application.persistentDataPath + @"\login" + ".txt";
         public static string practiceDir = Application.persistentDataPath + @"\practice";
